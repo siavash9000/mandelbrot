@@ -1,14 +1,17 @@
 public class MandelBrotDecider {
 
-    public MandelBrotDecider(int maxIterationAllowed){
-        if(maxIterationAllowed<0){
-            throw new IllegalArgumentException("maxIterationAllowed must be greater than 0");
-        }
-    }
-
-    public boolean isPartOfMandelBrot(float x, float y) {
-        if (x==-2){
-            return false;
+    private int maxIterationAllowed = 20;
+    public boolean isPartOfMandelBrot(Point worldPoint) {
+        double a = worldPoint.getX();
+        double b = worldPoint.getY();
+        double lastx = 0, lasty = 0, nextx, nexty;
+        for (int i=0;i<maxIterationAllowed;i++) {
+            if ((Math.pow(lastx,2) + Math.pow(lasty,2)) > 4)
+                return false;
+            nextx = Math.pow(lastx,2) - Math.pow(lasty,2) + a;
+            nexty = 2*lastx*lasty + b;
+            lastx = nextx;
+            lasty = nexty;
         }
         return true;
     }

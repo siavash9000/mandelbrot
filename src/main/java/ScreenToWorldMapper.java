@@ -1,8 +1,9 @@
 
 public class ScreenToWorldMapper {
 
-    private final Point minScreen, maxScreen, minWorld, maxWorld;
-    private float xScale, yScale;
+    private final Point minScreen,maxScreen, minWorld, maxWorld;
+
+    private double xScale, yScale;
     public ScreenToWorldMapper(Point minScreen, Point maxScreen, Point minWorld, Point maxWorld) {
         this.maxScreen = maxScreen;
         this.minScreen = minScreen;
@@ -17,8 +18,8 @@ public class ScreenToWorldMapper {
             throw new NullPointerException("Point is null.");
         if (outsideOfScreen(screenPoint))
             throw new IllegalArgumentException(String.format("Given Point is outside of screen: %s",screenPoint.toString()));
-        float worldX = minWorld.getX() + screenPoint.getX()*xScale;
-        float worldY = minWorld.getY() + screenPoint.getY()*yScale;
+        double worldX = minWorld.getX() + screenPoint.getX()*xScale;
+        double worldY = minWorld.getY() + screenPoint.getY()*yScale;
         return new Point(worldX,worldY);
     }
 

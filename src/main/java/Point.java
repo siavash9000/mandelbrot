@@ -1,16 +1,16 @@
 public class Point {
-    private final float x,y;
+    private final double x,y;
 
-    public Point(float x, float y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 

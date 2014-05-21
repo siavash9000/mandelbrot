@@ -6,21 +6,21 @@ import static junit.framework.Assert.assertTrue;
 
 public class MandelBrotDeciderTest {
 
-    private int maxiterationAllowed = 0;
-    private MandelBrotDecider decider = new MandelBrotDecider(maxiterationAllowed);
+    private MandelBrotDecider decider = new MandelBrotDecider();
 
-    @Test(expected = IllegalArgumentException.class)
-    public void exceptionOnNegativeIteration() {
-        new MandelBrotDecider(-1);
+    @Test
+    public void inMandelbrot(){
+        assertTrue(decider.isPartOfMandelBrot(new Point(0, 0)));
+        assertTrue(decider.isPartOfMandelBrot(new Point(0.1, 0)));
+        assertTrue(decider.isPartOfMandelBrot(new Point(0.2, -0.1)));
+        assertTrue(decider.isPartOfMandelBrot(new Point(-0.1, 0.2)));
     }
 
     @Test
-    public void originIsInMandelbrot(){
-        assertTrue(decider.isPartOfMandelBrot(0, 0));
-    }
-
-    @Test
-    public void notInMandelbrotOne(){
-        assertFalse(decider.isPartOfMandelBrot(-2, 0));
+     public void notInMandelbrot(){
+        assertFalse(decider.isPartOfMandelBrot(new Point(-2, -1)));
+        assertFalse(decider.isPartOfMandelBrot(new Point(2, 1)));
+        assertFalse(decider.isPartOfMandelBrot(new Point(-2, 1)));
+        assertFalse(decider.isPartOfMandelBrot(new Point(-2, 1)));
     }
 }
