@@ -1,9 +1,17 @@
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class MandelBrotGenerator {
     private int screenWidth;
     private int screenHeight;
 
     private ScreenToWorldMapper mapper;
     private int maxIterationAllowed;
+    private int numberOfCores = Runtime.getRuntime().availableProcessors();
+    private ExecutorService executorService = Executors.newCachedThreadPool();
 
     public MandelBrotGenerator(int screenWidth, int screenHeight, int maxIterationAllowed) {
         this.screenWidth = screenWidth;
@@ -31,10 +39,14 @@ public class MandelBrotGenerator {
     }
 
     public boolean[][] getMandelBrotPicture() {
+        return getSubPicture(0,screenHeight);
+    }
+
+    private boolean[][] getSubPicture(int startingRow, int endrow) {
         boolean[][] screenPoints = new boolean[screenWidth][screenHeight];
         for(int i=0;i< screenWidth;i++) {
-            for(int j=0;j< screenHeight;j++) {
-                    screenPoints[i][j] = isPartOfMandelBrot(mapper.mapToWorld(new Point(i, j)));
+            for(int j=startingRow;j< endrow;j++) {
+                screenPoints[i][j] = isPartOfMandelBrot(mapper.mapToWorld(new Point(i, j)));
             }
         }
         return screenPoints;

@@ -4,10 +4,10 @@ import java.awt.image.*;
 import javax.swing.*;
 
 public class ViewerApp extends Component {
-    private final int screenWidth = 900;
-    private final int screenHeight = 600;
+    private final int screenWidth = 1500;
+    private final int screenHeight = 1000;
     BufferedImage img;
-    private MandelBrotGenerator decider = new MandelBrotGenerator(screenWidth,screenHeight,20);
+    private MandelBrotGenerator decider = new MandelBrotGenerator(screenWidth,screenHeight,50);
 
     public void paint(Graphics g) {
         g.drawImage(img, 0, 0, null);
@@ -20,12 +20,12 @@ public class ViewerApp extends Component {
         System.out.println(String.format("%3f milliseconds", System.currentTimeMillis() - start));
         for(int i=0;i< screenWidth;i++) {
             for(int j=0;j< screenHeight;j++) {
-            if(screenPoints[i][j]) {
-                img.setRGB(i, j, Color.black.getRGB());
-            }
-            else {
-                img.setRGB(i, j, Color.blue.getRGB());
-            }
+                if(screenPoints[i][j]) {
+                    img.setRGB(i, j, Color.black.getRGB());
+                }
+                else {
+                    img.setRGB(i, j, Color.white.getRGB());
+                }
             }
         }
 
