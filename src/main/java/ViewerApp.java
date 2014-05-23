@@ -3,14 +3,11 @@ import java.awt.event.*;
 import java.awt.image.*;
 import javax.swing.*;
 
-/**
- * This class demonstrates how to load an Image from an external file
- */
 public class ViewerApp extends Component {
     private final int screenWidth = 900;
     private final int screenHeight = 600;
     BufferedImage img;
-    private MandelBrotDecider decider = new MandelBrotDecider(screenWidth,screenHeight,20);
+    private MandelBrotGenerator decider = new MandelBrotGenerator(screenWidth,screenHeight,20);
 
     public void paint(Graphics g) {
         g.drawImage(img, 0, 0, null);

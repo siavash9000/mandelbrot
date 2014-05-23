@@ -1,11 +1,11 @@
-public class MandelBrotDecider {
+public class MandelBrotGenerator {
     private int screenWidth;
     private int screenHeight;
 
     private ScreenToWorldMapper mapper;
     private int maxIterationAllowed;
 
-    public MandelBrotDecider(int screenWidth, int screenHeight,int maxIterationAllowed) {
+    public MandelBrotGenerator(int screenWidth, int screenHeight, int maxIterationAllowed) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.mapper = new ScreenToWorldMapper(new Point(0,0),new Point(screenWidth,screenHeight),
