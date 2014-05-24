@@ -39,14 +39,23 @@ public class MandelBrotGenerator {
     }
 
     public boolean[][] getMandelBrotPicture() {
-        return getSubPicture(0,screenHeight);
+        int numberOfColumnsPerBlock = screenWidth/numberOfCores;
+        ArrayList<boolean[][]> partialSolutions = new ArrayList<boolean[][]>(numberOfCores+1);
+        for (int i=0;i<numberOfCores;i++){
+            partialSolutions.add(getSubPicture(i*numberOfColumnsPerBlock,(i+1)*numberOfColumnsPerBlock));
+        }
+        boolean[][] solution = new boolean[screenWidth][screenHeight];
+        for (int i=0;i<numberOfCores;i++) {
+            System.arraycopy(partialSolutions.get(i), 0, solution, i*numberOfColumnsPerBlock, partialSolutions.get(i).length);
+        }
+        return solution;
     }
 
-    private boolean[][] getSubPicture(int startingRow, int endrow) {
-        boolean[][] screenPoints = new boolean[screenWidth][screenHeight];
-        for(int i=0;i< screenWidth;i++) {
-            for(int j=startingRow;j< endrow;j++) {
-                screenPoints[i][j] = isPartOfMandelBrot(mapper.mapToWorld(new Point(i, j)));
+    private boolean[][] getSubPicture(int startingColumn, int endColumn) {
+        boolean[][] screenPoints = new boolean[Math.abs(startingColumn-endColumn)][screenHeight];
+        for(int i=startingColumn;i< endColumn;i++) {
+            for(int j=0;j< screenHeight;j++) {
+                screenPoints[i-startingColumn][j] = isPartOfMandelBrot(mapper.mapToWorld(new Point(i, j)));
             }
         }
         return screenPoints;
