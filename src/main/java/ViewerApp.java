@@ -2,13 +2,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import javax.swing.*;
 
 public class ViewerApp extends Component {
     private final int screenWidth = 1500;
     private final int screenHeight = 1000;
     BufferedImage img;
-    private MandelBrotGenerator decider = new MandelBrotGenerator(screenWidth,screenHeight,1000,250);
+    private MandelBrotGenerator decider = new MandelBrotGenerator(screenWidth,screenHeight,1000,10, Executors.newCachedThreadPool());
 
     public void paint(Graphics g) {
         g.drawImage(img, 0, 0, null);

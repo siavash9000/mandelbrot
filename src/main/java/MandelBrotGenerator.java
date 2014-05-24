@@ -10,9 +10,11 @@ public class MandelBrotGenerator {
     private ScreenToWorldMapper mapper;
     private int maxIterationAllowed;
     private int numberOfCores;
-    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private ExecutorService executorService;
+    private Double computationTime = null;
 
-    public MandelBrotGenerator(int screenWidth, int screenHeight, int maxIterationAllowed, int numberOfCores) {
+    public MandelBrotGenerator(int screenWidth, int screenHeight, int maxIterationAllowed, int numberOfCores, ExecutorService service) {
+        this.executorService = service;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.mapper = new ScreenToWorldMapper(new Point(0,0),new Point(screenWidth,screenHeight),
@@ -21,7 +23,15 @@ public class MandelBrotGenerator {
         this.numberOfCores = numberOfCores;
     }
 
+    public double getComputationTime() throws ExecutionException, InterruptedException {
+        if (computationTime == null){
+            getMandelBrotPicture();
+        }
+        return computationTime;
+    }
+
     public boolean[][] getMandelBrotPicture() throws ExecutionException, InterruptedException {
+        double start = System.currentTimeMillis();
         int numberOfColumnsPerBlock = screenWidth/numberOfCores;
         ArrayList<Future<boolean[][]>> partialSolutions = new ArrayList<Future<boolean[][]>>(numberOfCores+1);
         for (int i=0;i<numberOfCores;i++){
@@ -34,6 +44,7 @@ public class MandelBrotGenerator {
         for (int i=0;i<numberOfCores;i++) {
             System.arraycopy(partialSolutions.get(i).get(), 0, solution, i*numberOfColumnsPerBlock, partialSolutions.get(i).get().length);
         }
+        computationTime = System.currentTimeMillis() - start;
         return solution;
     }
 }
