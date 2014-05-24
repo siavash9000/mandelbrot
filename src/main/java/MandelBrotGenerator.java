@@ -28,6 +28,8 @@ public class MandelBrotGenerator {
             partialSolutions.add(executorService.submit(new MandelBrotSolver((i*numberOfColumnsPerBlock),
                     (i+1)*numberOfColumnsPerBlock,screenHeight,maxIterationAllowed,mapper)));
         }
+        int remainingColumns = screenWidth-((numberOfCores-1)*numberOfColumnsPerBlock);
+        partialSolutions.add(executorService.submit(new MandelBrotSolver(remainingColumns,screenWidth,screenHeight,maxIterationAllowed,mapper)));
         boolean[][] solution = new boolean[screenWidth][screenHeight];
         for (int i=0;i<numberOfCores;i++) {
             System.arraycopy(partialSolutions.get(i).get(), 0, solution, i*numberOfColumnsPerBlock, partialSolutions.get(i).get().length);
