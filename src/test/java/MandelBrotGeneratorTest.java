@@ -7,7 +7,9 @@ import static junit.framework.Assert.assertTrue;
 public class MandelBrotGeneratorTest {
     private final int screenWidth = 900;
     private final int screenHeight = 600;
-    private MandelBrotGenerator decider = new MandelBrotGenerator(screenWidth,screenHeight,20);
+    ScreenToWorldMapper mapper = new ScreenToWorldMapper(new Point(0,0),new Point(screenWidth,screenHeight),
+    new Point(-2.5,-1.5), new Point(1.5,1.5));
+    private MandelBrotSolver decider = new MandelBrotSolver(0,screenWidth,screenHeight,20, mapper);
 
     @Test
     public void inMandelbrot(){
